@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#aaa">
+  <meta name="theme-color" content="#ddd">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>i spent money</title>
   <link rel="stylesheet" href="./style.css">
@@ -24,14 +24,21 @@
       </div>
       <div class="content">
         <div id="totalMoneyContainer" class="totalMoney">
-          <label for="moneyOnHand">How much money do you have:</label>
+          <label for="moneyOnHand">I have</label>
+          <span class="dollarSign">$</span>
           <input oninput="updateMoneyOnHand()" type="text" pattern="[-+]?[0-9]*([\.,]?[0-9]?[0-9]?)?" name="moneyOnHand"
-            id="moneyOnHand">
+            id="moneyOnHand" class="dollarInput">
         </div>
         <div id="adjustMoneyContainer" class="adjustMoney">
-          <label for="adjustMoney">How much did you spend?</label>
+          <label for="adjustMoney">I spent</label>
+          <span></span>
+          <span class="dollarSign">$</span>
           <input oninput="checkAmount()" type="text" pattern="[-+]?[0-9]*([\.,]?[0-9]?[0-9]?)?" name="adjustMoney"
-            id="adjustMoney">
+            id="adjustMoney" class="dollarInput">
+          <label for="category">on</label>
+          <input type="text" name="category" id="category" list="categories" autocomplete="off">
+          <datalist id="categories">
+          </datalist>
           <button onclick="adjustMoney()">done</button>
         </div>
       </div>

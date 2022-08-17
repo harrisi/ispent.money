@@ -11,8 +11,9 @@ html {
 }
 
 body {
-  background-color: #aaa;
+  background-color: #ddd;
   font-family: sans-serif;
+  color: #666;
 }
 
 input:invalid {
@@ -26,7 +27,8 @@ input:invalid {
 }
 
 .content * {
-  margin: 10px;
+  margin: 5px;
+  color: #444;
 }
 
 .totalMoney {
@@ -39,4 +41,11 @@ input:invalid {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+span.dollarSign {
+  margin-right: 0px;
+  padding-right: 0px;
+  margin-left: 0px;
+  padding-left: 0px;
 }
