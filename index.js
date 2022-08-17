@@ -14,14 +14,20 @@ function updateMoneyOnHand() {
   }
 }
 
-let lastValidAmount
+let lastValidAmount = ""
 
 function adjustMoney() {
   let amount = document.getElementById('adjustMoney')
   if (amount.checkValidity()) {
-    lastValidAmount = amount.value
     document.getElementById('moneyOnHand').value = Number(document.getElementById('moneyOnHand').value) - Number(amount.value)
     updateMoneyOnHand()
+  }
+}
+
+function checkAmount() {
+  let amount = document.getElementById('adjustMoney')
+  if (amount.checkValidity()) {
+    lastValidAmount = amount.value
   } else {
     amount.value = lastValidAmount
   }
