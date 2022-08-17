@@ -9,5 +9,7 @@ function updateMoneyOnHand() {
   let mOH = document.getElementById('moneyOnHand')
   if (mOH.checkValidity()) {
     localStorage.setItem('moneyOnHand', mOH.value)
+  } else {
+    mOH.value = localStorage.getItem('moneyOnHand')
   }
 }
