@@ -21,6 +21,7 @@ function adjustMoney() {
   if (amount.checkValidity()) {
     document.getElementById('moneyOnHand').value = Number(document.getElementById('moneyOnHand').value) - Number(amount.value)
     updateMoneyOnHand()
+    amount.value = ""
   }
 }
 
