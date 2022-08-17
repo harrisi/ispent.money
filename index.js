@@ -1,10 +1,10 @@
-addEventListener('load', () => {
+document.addEventListener('load', () => {
   moneyOnHand = localStorage.getItem('moneyOnHand')
   if (moneyOnHand) {
-    document.getElementById('moneyOnHand').innerText = moneyOnHand
+    document.getElementById('moneyOnHand').value = moneyOnHand
   }
 })
 
 function updateMoneyOnHand() {
-  localStorage.setItem('moneyOnHand', document.getElementById('moneyOnHand').innerText)
+  localStorage.setItem('moneyOnHand', document.getElementById('moneyOnHand').value)
 }
