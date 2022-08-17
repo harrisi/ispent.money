@@ -6,5 +6,8 @@ window.addEventListener('load', () => {
 })
 
 function updateMoneyOnHand() {
-  localStorage.setItem('moneyOnHand', document.getElementById('moneyOnHand').value)
+  let mOH = document.getElementById('moneyOnHand')
+  if (mOH.checkValidity()) {
+    localStorage.setItem('moneyOnHand', mOH.value)
+  }
 }
