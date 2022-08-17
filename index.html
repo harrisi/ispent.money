@@ -13,7 +13,11 @@
   </head>
   <body>
     <main>
-      <h1>i spent money</h1>  
+      <h1>i spent money</h1>
+      <div class="qa">
+        <label for="moneyOnHand">How much money do you have:</label>
+        <input onchange="updateMoneyOnHand" type="text" pattern="[0-9]*(.?[0-9]?[0-9]?)?" inputmode="numeric" name="moneyOnHand" id="moneyOnHand">
+      </div>
     </main>
     <script src="index.js"></script>
   </body>

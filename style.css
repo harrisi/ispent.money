@@ -1,0 +1,8 @@
+body {
+  background-color: #0f0;
+  font-family: sans-serif;
+}
+
+input:invalid {
+  border: red solid 3px;
+}
