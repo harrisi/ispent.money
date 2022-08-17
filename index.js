@@ -2,9 +2,32 @@ window.addEventListener('load', () => {
   let mOH = localStorage.getItem('moneyOnHand')
   if (mOH) {
     document.getElementById('moneyOnHand').value = withSep(mOH)
+  } else {
+    localStorage.setItem('moneyOnHand', '0')
   }
   document.getElementById('adjustMoney').onkeyup = handleKeyup
+  document.getElementById('category').onkeyup = handleKeyup
+  if (!localStorage.getItem('hist')) {
+    localStorage.setItem('hist', '')
+  }
+  populateCategories(localStorage.getItem('categories'))
 })
+
+function populateCategories(cats) {
+  if (!cats) {
+    return
+  }
+
+  let catElement = document.getElementById('categories')
+  for (let cat of cats.split(',')) {
+    if (!cat) {
+      continue
+    }
+    let newCat = document.createElement('option')
+    newCat.value = cat
+    catElement.appendChild(newCat)
+  }
+}
 
 function withSep(without) {
   if (without.length === 1) {
@@ -13,6 +36,10 @@ function withSep(without) {
   let res = without.slice(0, -2) + "." + without.slice(-2)
   console.log(res)
   return res
+}
+
+function saveHist() {
+  localStorage.setItem('hist', `${localStorage.getItem('hist')};${Date.now()},${localStorage.getItem('moneyOnHand')},${document.getElementById('category').value}}`)
 }
 
 function updateMoneyOnHand() {
@@ -29,10 +56,29 @@ function adjustMoney() {
   if (amount.checkValidity()) {
     let mOH = document.getElementById('moneyOnHand')
     mOH.value = withSep(((Math.round(mOH.value * 100) - Math.round(amount.value * 100))).toString())
+    saveHist()
     localStorage.setItem('moneyOnHand', mOH.value.replace('.', ''))
     amount.value = ""
     lastValidAmount = ""
+
+    let catElement = document.getElementById('categories')
+    let category = document.getElementById('category')
+    let exists = false
+    for (let opt of catElement.children) {
+      if (opt.value == category.value) {
+        exists = true
+        break
+      }
+    }
+    if (!exists) {
+      let newCat = document.createElement('option')
+      newCat.value = category.value
+      catElement.appendChild(newCat)
+      localStorage.setItem('categories', `${localStorage.getItem('categories') || ''},${category.value}`)
+    }
+    category.value = ""
   }
+  amount.focus()
 }
 
 let lastValidAmount = ""
