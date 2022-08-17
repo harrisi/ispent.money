@@ -3,8 +3,15 @@ html {
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
+@supports(padding:max(0px)) {
+  body, header, footer {
+      padding-left: min(0vmin, env(safe-area-inset-left));
+      padding-right: min(0vmin, env(safe-area-inset-right));
+  }
+}
+
 body {
-  background-color: #666;
+  background-color: #aaa;
   font-family: sans-serif;
 }
 
@@ -12,13 +19,24 @@ input:invalid {
   border: red solid 3px;
 }
 
-div {
-  padding: 5px;
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@supports(padding:max(0px)) {
-  body, header, footer {
-      padding-left: min(0vmin, env(safe-area-inset-left));
-      padding-right: min(0vmin, env(safe-area-inset-right));
-  }
+.content * {
+  margin: 10px;
+}
+
+.totalMoney {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adjustMoney {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
