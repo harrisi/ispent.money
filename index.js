@@ -1,8 +1,9 @@
 window.addEventListener('load', () => {
-  moneyOnHand = localStorage.getItem('moneyOnHand')
-  if (moneyOnHand) {
-    document.getElementById('moneyOnHand').value = moneyOnHand
+  let mOH = localStorage.getItem('moneyOnHand')
+  if (mOH) {
+    document.getElementById('moneyOnHand').value = mOH
   }
+  document.getElementById('adjustMoney').onkeyup = handleKeyup
 })
 
 function updateMoneyOnHand() {
@@ -14,16 +15,17 @@ function updateMoneyOnHand() {
   }
 }
 
-let lastValidAmount = ""
-
 function adjustMoney() {
   let amount = document.getElementById('adjustMoney')
   if (amount.checkValidity()) {
-    document.getElementById('moneyOnHand').value = Number(document.getElementById('moneyOnHand').value) - Number(amount.value)
-    updateMoneyOnHand()
+    let mOH = document.getElementById('moneyOnHand')
+    mOH.value = mOH.value - amount.value
+    localStorage.setItem('moneyOnHand', mOH.value)
     amount.value = ""
   }
 }
+
+let lastValidAmount = ""
 
 function checkAmount() {
   let amount = document.getElementById('adjustMoney')
@@ -31,5 +33,11 @@ function checkAmount() {
     lastValidAmount = amount.value
   } else {
     amount.value = lastValidAmount
+  }
+}
+
+function handleKeyup(e) {
+  if (e.key === "Enter") {
+    adjustMoney()
   }
 }

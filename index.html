@@ -17,19 +17,15 @@
   <main>
     <h1>i spent money</h1>
     <div id="totalMoneyContainer" class="totalMoney">
-      <div id="askAmount">
-        <label for="moneyOnHand">How much money do you have:</label>
-        <input oninput="updateMoneyOnHand()" type="text" pattern="[-+]?[0-9]*([\.,]?[0-9]?[0-9]?)?" name="moneyOnHand"
-          id="moneyOnHand">
-      </div>
+      <label for="moneyOnHand">How much money do you have:</label>
+      <input oninput="updateMoneyOnHand()" type="text" pattern="[-+]?[0-9]*([\.,]?[0-9]?[0-9]?)?" name="moneyOnHand"
+        id="moneyOnHand">
     </div>
     <div id="adjustMoneyContainer" class="adjustMoney">
-      <div>
-        <label for="adjustMoney">How much did you spend?</label>
-        <input oninput="checkAmount()" type="text" pattern="[-+]?[0-9]*([\.,]?[0-9]?[0-9]?)?" name="adjustMoney"
-          id="adjustMoney">
-        <button onclick="adjustMoney()">done</button>
-      </div>
+      <label for="adjustMoney">How much did you spend?</label>
+      <input oninput="checkAmount()" type="text" pattern="[-+]?[0-9]*([\.,]?[0-9]?[0-9]?)?" name="adjustMoney"
+        id="adjustMoney">
+      <button onclick="adjustMoney()">done</button>
     </div>
   </main>
   <script src="index.js"></script>
