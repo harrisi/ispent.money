@@ -1,4 +1,4 @@
-document.addEventListener('load', () => {
+window.addEventListener('load', () => {
   moneyOnHand = localStorage.getItem('moneyOnHand')
   if (moneyOnHand) {
     document.getElementById('moneyOnHand').value = moneyOnHand
