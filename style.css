@@ -6,3 +6,7 @@ body {
 input:invalid {
   border: red solid 3px;
 }
+
+div {
+  padding: 5px;
+}

@@ -1,24 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>i spent money</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="./res/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./res/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./res/favicon-16x16.png">
-    <link rel="manifest" href="./site.webmanifest">
-  </head>
-  <body>
-    <main>
-      <h1>i spent money</h1>
-      <div class="totalMoney">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>i spent money</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="./res/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./res/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./res/favicon-16x16.png">
+  <link rel="manifest" href="./site.webmanifest">
+</head>
+
+<body>
+  <main>
+    <h1>i spent money</h1>
+    <div id="totalMoneyContainer" class="totalMoney">
+      <div id="askAmount">
         <label for="moneyOnHand">How much money do you have:</label>
-        <input oninput="updateMoneyOnHand()" type="text" pattern="[0-9]*(\.?[0-9]?[0-9]?)?" inputmode="decimal" name="moneyOnHand" id="moneyOnHand">
+        <input oninput="updateMoneyOnHand()" type="text" pattern="[-+]?[0-9]*([\.,]?[0-9]?[0-9]?)?" inputmode="decimal"
+          name="moneyOnHand" id="moneyOnHand">
       </div>
-    </main>
-    <script src="index.js"></script>
-  </body>
+    </div>
+    <div id="adjustMoneyContainer" class="adjustMoney">
+      <div>
+        <label for="adjustMoney">How much did you spend?</label>
+        <input type="text" pattern="[-+]?[0-9]*([\.,]?[0-9]?[0-9]?)?" inputmode="decimal" name="adjustMoney"
+          id="adjustMoney">
+        <button onclick="adjustMoney()">done</button>
+      </div>
+    </div>
+  </main>
+  <script src="index.js"></script>
+</body>
+
 </html>

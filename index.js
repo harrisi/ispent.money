@@ -13,3 +13,16 @@ function updateMoneyOnHand() {
     mOH.value = localStorage.getItem('moneyOnHand')
   }
 }
+
+let lastValidAmount
+
+function adjustMoney() {
+  let amount = document.getElementById('adjustMoney')
+  if (amount.checkValidity()) {
+    lastValidAmount = amount.value
+    document.getElementById('moneyOnHand').value = Number(document.getElementById('moneyOnHand').value) - Number(amount.value)
+    updateMoneyOnHand()
+  } else {
+    amount.value = lastValidAmount
+  }
+}
