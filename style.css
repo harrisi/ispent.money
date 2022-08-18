@@ -29,16 +29,8 @@ input:invalid {
 .content * {
   margin: 5px;
   color: #444;
-}
-
-.totalMoney {
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.adjustMoney {
-  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
