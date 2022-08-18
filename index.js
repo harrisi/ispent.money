@@ -40,7 +40,7 @@ function withSep(without) {
 
 function saveHist() {
   // does the value get automatically broken up on commas? what?
-  localStorage.setItem('hist', `${localStorage.getItem('hist')},${Date.now()};${localStorage.getItem('moneyOnHand')};${document.getElementById('category').value}`)
+  localStorage.setItem('hist', `${localStorage.getItem('hist') ? localStorage.getItem('hist') + ',' : ''}${Date.now()};${localStorage.getItem('moneyOnHand')};${document.getElementById('adjustMoney').value * 100};${document.getElementById('category').value}`)
 }
 
 function updateMoneyOnHand() {
@@ -65,17 +65,19 @@ function adjustMoney() {
     let catElement = document.getElementById('categories')
     let category = document.getElementById('category')
     let exists = false
-    for (let opt of catElement.children) {
-      if (opt.value == category.value) {
-        exists = true
-        break
+    if (!category.value == '') {
+      for (let opt of catElement.children) {
+        if (opt.value == category.value) {
+          exists = true
+          break
+        }
       }
-    }
-    if (!exists) {
-      let newCat = document.createElement('option')
-      newCat.value = category.value
-      catElement.appendChild(newCat)
-      localStorage.setItem('categories', `${localStorage.getItem('categories') || ''},${category.value}`)
+      if (!exists) {
+        let newCat = document.createElement('option')
+        newCat.value = category.value
+        catElement.appendChild(newCat)
+        localStorage.setItem('categories', `${localStorage.getItem('categories') ? localStorage.getItem('categories') + ',' : ''}${category.value}`)
+      }
     }
     category.value = ""
   }
