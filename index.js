@@ -10,8 +10,28 @@ window.addEventListener('load', () => {
   if (!localStorage.getItem('hist')) {
     localStorage.setItem('hist', '')
   }
+  initHistoryList()
   populateCategories(localStorage.getItem('categories'))
 })
+
+function initHistoryList() {
+  let histList = document.getElementById('historyList')
+  for (let hist of localStorage.getItem('hist').split(',').reverse()) {
+    let histItem = document.createElement('li')
+    let histElements = hist.split(';')
+    let spentAmount = withSep(histElements[2])
+    let spentCategory = histElements[3]
+    histItem.innerText = `Spent $${spentAmount} on ${spentCategory || '(uncategorized)'}`
+    histList.appendChild(histItem)
+  }
+}
+
+function updateHistoryList(spent, category) {
+  let histList = document.getElementById('historyList')
+  let newHistItem = document.createElement('li')
+  newHistItem.innerText = `Spent $${spent} on ${category || '(uncategorized)'}`
+  histList.prepend(newHistItem)
+}
 
 function populateCategories(cats) {
   if (!cats) {
@@ -39,8 +59,12 @@ function withSep(without) {
 }
 
 function saveHist() {
-  // does the value get automatically broken up on commas? what?
-  localStorage.setItem('hist', `${localStorage.getItem('hist') ? localStorage.getItem('hist') + ',' : ''}${Date.now()};${localStorage.getItem('moneyOnHand')};${document.getElementById('adjustMoney').value * 100};${document.getElementById('category').value}`)
+  let hist = localStorage.getItem('hist')
+  let mOH = localStorage.getItem('moneyOnHand')
+  let spent = document.getElementById('adjustMoney').value * 100
+  let category = document.getElementById('category').value
+  localStorage.setItem('hist', `${hist ? hist + ',' : ''}${Date.now()};${mOH};${spent};${category}`)
+  updateHistoryList(withSep(spent.toString()), category)
 }
 
 function updateMoneyOnHand() {
