@@ -1,4 +1,17 @@
 window.addEventListener('load', () => {
+  // const params = new Proxy(new URLSearchParams(window.location.search), {
+  //   get: (searchParams, prop) => searchParams.get(prop),
+  // })
+
+  // if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+  //   if (!params.launcher) {
+  //     // suggest adding to homescreen
+  //     let p = document.createElement('p')
+  //     p.textContent = `it looks like you're on mobile. try adding to homescreen.`
+  //     document.getElementById('container').appendChild(p)
+  //   }
+  // }
+
   let mOH = localStorage.getItem('moneyOnHand')
   if (mOH) {
     document.getElementById('moneyOnHand').value = withSep(mOH)
@@ -12,6 +25,10 @@ window.addEventListener('load', () => {
   }
   initHistoryList()
   populateCategories(localStorage.getItem('categories'))
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./src/sw.js')
+  }
 })
 
 function initHistoryList() {
