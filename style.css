@@ -49,7 +49,7 @@ span.dollarSign {
   list-style: none;
 }
 
-.history *:nth-child(even) {
+.historyList *:nth-child(odd) {
   background-color: #eee;
 }
 
