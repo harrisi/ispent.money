@@ -1,3 +1,5 @@
+let db
+
 window.addEventListener('load', () => {
   let mOH = localStorage.getItem('moneyOnHand')
   if (mOH) {
@@ -12,7 +14,73 @@ window.addEventListener('load', () => {
   }
   initHistoryList()
   populateCategories(localStorage.getItem('categories'))
+
+  const systemMessages = document.getElementById('systemMessages')
+
+  const DBOpenRequest = window.indexedDB.open('ispent.money')
+
+  DBOpenRequest.onerror = e => {
+    systemMessages.appendChild(createListItem(`error loading database; ${e.eventPhase}; ${DBOpenRequest.errorCode}`))
+  }
+
+  DBOpenRequest.onsuccess = e => {
+    systemMessages.appendChild(createListItem('database initialized'))
+
+    db = DBOpenRequest.result
+
+    displayHist()
+  }
+
+  DBOpenRequest.onupgradeneeded = e => {
+    db = e.target.result
+
+    db.onerror = e => {
+      systemMessages.appendChild(createListItem('error loading database'))
+    }
+
+    const objStore = db.createObjectStore('histList', { keyPath: 'id', autoIncrement: true, })
+
+    objStore.createIndex('createdAt', 'createdAt', { unique: false })
+    objStore.createIndex('moneyOnHand', 'moneyOnHand', { unique: false })
+    objStore.createIndex('adjustAmount', 'adjustAmount', { unique: false })
+    objStore.createIndex('category', 'category', { unique: false })
+    // account, locale?, updatedAt?
+
+    systemMessages.appendChild(createListItem('object store created'))
+  }
+
 })
+
+function displayHist() {
+  const hist = document.getElementById('hist')
+  while (hist.firstChild) {
+    hist.removeChild(hist.lastChild)
+  }
+
+  const objStore = db.transaction('histList').objectStore('histList')
+  objStore.openCursor().onsuccess = e => {
+    const cursor = e.target.result
+
+    if (!cursor) {
+      systemMessages.appendChild(createListItem('entries all displayed'))
+      return
+    }
+
+    const { createdAt, moneyOnHand, adjustAmount, category } = cursor.value
+    const histText = `Spent $${withSep(adjustAmount)} on ${category} at ${createdAt}; $${withSep(moneyOnHand)} left.`
+    const listItem = createListItem(histText)
+
+    hist.appendChild(listItem)
+
+    cursor.continue()
+  }
+}
+
+function createListItem(text) {
+  const li = document.createElement('li')
+  li.textContent = text
+  return li
+}
 
 function initHistoryList() {
   let histList = document.getElementById('historyList')
@@ -50,6 +118,7 @@ function populateCategories(cats) {
 }
 
 function withSep(without) {
+  without = without.toString()
   if (without.length === 1) {
     without = `0${without}`
   }
@@ -60,11 +129,43 @@ function withSep(without) {
 
 function saveHist() {
   let hist = localStorage.getItem('hist')
-  let mOH = localStorage.getItem('moneyOnHand')
-  let spent = document.getElementById('adjustMoney').value * 100
+  let moneyOnHand = localStorage.getItem('moneyOnHand')
+  let adjustAmount = document.getElementById('adjustMoney').value * 100
   let category = document.getElementById('category').value
-  localStorage.setItem('hist', `${hist ? hist + ',' : ''}${Date.now()};${mOH};${spent};${category}`)
-  updateHistoryList(withSep(spent.toString()), category)
+  let now = Date.now()
+  localStorage.setItem('hist', `${hist ? hist + ',' : ''}${now};${moneyOnHand};${adjustAmount};${category}`)
+  updateHistoryList(withSep(adjustAmount.toString()), category)
+
+  let newItem = {
+    createdAt: now,
+    moneyOnHand,
+    adjustAmount,
+    category,
+  }
+
+  const trans = db.transaction('histList', 'readwrite')
+
+  trans.oncomplete = () => {
+    systemMessages.appendChild(createListItem('trans complete: db mod finished'))
+
+    displayHist()
+  }
+
+  trans.onerror = () => {
+    systemMessages.appendChild(createListItem(`trans error: ${trans.error}`))
+  }
+
+  const objStore = trans.objectStore('histList')
+  console.log(objStore.indexNames)
+  console.log(objStore.keyPath)
+  console.log(objStore.name)
+  console.log(objStore.transaction)
+  console.log(objStore.autoIncrement)
+
+  const objStoreReq = objStore.add(newItem)
+  objStoreReq.onsuccess = e => {
+    systemMessages.appendChild(createListItem('req success'))
+  }
 }
 
 function updateMoneyOnHand() {
