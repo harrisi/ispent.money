@@ -76,7 +76,7 @@ function displayHist() {
     }
 
     const { createdAt, moneyOnHand, adjustAmount, category } = cursor.value
-    const histText = `Spent $${new Money(adjustAmount, true)} on ${category} at ${createdAt}; $${new Money(moneyOnHand, true)} left.`
+    const histText = `Spent $${new Money(adjustAmount, true)} on ${category || '(uncategorized)'} at ${Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'long' }).format(new Date(createdAt))}; $${new Money(moneyOnHand, true)} left.`
     const listItem = createListItem(histText)
 
     hist.prepend(listItem)
