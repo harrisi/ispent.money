@@ -86,7 +86,7 @@ function initHistoryList() {
     let histElements = hist.split(';')
     let spentAmount = new Money(histElements[2], true).toString(true)
     let spentCategory = histElements[3]
-    histItem.innerText = `Spent ${spentAmount} on ${spentCategory || '(uncategorized)'}`
+    histItem.textContent = `Spent ${spentAmount} on ${spentCategory || '(uncategorized)'}`
     histList.appendChild(histItem)
   }
 }
@@ -94,7 +94,7 @@ function initHistoryList() {
 function updateHistoryList(spent, category) {
   let histList = document.getElementById('historyList')
   let newHistItem = document.createElement('li')
-  newHistItem.innerText = `Spent ${spent} on ${category || '(uncategorized)'}`
+  newHistItem.textContent = `Spent ${spent} on ${category || '(uncategorized)'}`
   histList.prepend(newHistItem)
 }
 
