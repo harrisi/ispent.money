@@ -26,33 +26,31 @@ input:invalid {
   align-items: center;
 }
 
-.content * {
-  margin: 5px;
+.content {
   color: #444;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
 
-span.dollarSign {
-  margin-right: 0px;
-  padding-right: 0px;
-  margin-left: 0px;
-  padding-left: 0px;
-}
-
-.history {
+.spentMoney {
   display: flex;
   justify-content: center;
   align-items: center;
-  list-style: none;
+  flex-wrap: wrap;
 }
 
-.history *:nth-child(even) {
+.spentMoney > * {
+  margin: 0.25rem;
+}
+
+.historyList {
+  list-style: none;
+  padding: 0;
+}
+
+.historyList *:nth-child(odd) {
   background-color: #eee;
-}
-
-li {
-  list-style: none;
 }
