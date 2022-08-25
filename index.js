@@ -1,3 +1,4 @@
+import Money from './src/money.mjs'
 let db
 
 window.addEventListener('load', () => {
@@ -16,8 +17,6 @@ window.addEventListener('load', () => {
 
   let mOH = new Money(localStorage.getItem('moneyOnHand') || 0, true)
   document.getElementById('moneyOnHand').value = mOH.toString()
-  document.getElementById('adjustMoney').onkeyup = handleKeyup
-  document.getElementById('category').onkeyup = handleKeyup
   initHistoryList()
   populateCategories(localStorage.getItem('categories'))
 
@@ -110,41 +109,15 @@ class Money {
       [...amount.matchAll(/\./g)].length !== 0)
   }
 
-  static Zero = new Money(0)
+  document.getElementById('adjustMoney').addEventListener('input', checkAmount)
+  document.getElementById('moneyOnHand').addEventListener('blur', updateMoneyOnHand)
 
-  #isEqual(that) {
-    return Math.abs(this.#amount - that.#amount) < Number.EPSILON
-  }
+  document.getElementById('moneyForm').addEventListener('submit', e => {
+    e.preventDefault()
 
-  toString(showCurrency = false, numOnly = false, dec = true) {
-    // force showCurrency false if numOnly true to make switch a little easier
-    if (numOnly) {
-      showCurrency = false
-    }
-    return this.#formatter.formatToParts(Math.round(this.#amount) / 100).map(({ type, value }) => {
-      switch (type) {
-        case 'currency': return showCurrency ? value : ''
-        case 'decimal': return dec ? value : ''
-        case 'group':
-        case 'infinity':
-        case 'literal':
-        case 'nan':
-          return numOnly ? '' : value
-        default: return value
-      }
-    }).reduce((string, part) => string + part)
-  }
-
-  add(that) {
-    this.#amount += that.#amount
-    return this
-  }
-
-  sub(that) {
-    this.#amount -= that.#amount
-    return this
-  }
-}
+    adjustMoney()
+  }, false)
+})
 
 function initHistoryList() {
   let histList = document.getElementById('historyList')
@@ -283,11 +256,5 @@ function checkAmount() {
     }
   } else {
     amount.value = lastValidAmount
-  }
-}
-
-function handleKeyup(e) {
-  if (e.key === "Enter") {
-    adjustMoney()
   }
 }

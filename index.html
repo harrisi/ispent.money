@@ -22,29 +22,25 @@
       <div class="header">
         <h1>i spent money</h1>
       </div>
+
       <div class="content">
-        <div id="totalMoneyContainer" class="totalMoney">
-          <label for="moneyOnHand">I have</label>
-          <span class="dollarSign">$</span>
-          <input onblur="updateMoneyOnHand()" type="text" pattern="[-+]?[\d,\._]*" name="moneyOnHand" id="moneyOnHand"
-            class="dollarInput">
-        </div>
-        <div id="adjustMoneyContainer" class="spentMoney">
-          <div class="adjustMoney">
-            <label for="adjustMoney">I spent</label>
-            <span></span>
-            <span class="dollarSign">$</span>
-            <input oninput="checkAmount()" type="text" pattern="[-+]?[\d,\._]*" name="adjustMoney" id="adjustMoney"
-              class="dollarInput">
+        <form id="moneyForm" action="index.html">
+          <div id="totalMoneyContainer" class="totalMoney">
+            <label for="moneyOnHand">I have $</label>
+            <input type="text" pattern="[-+]?[\d,\._]*" name="moneyOnHand" id="moneyOnHand" class="dollarInput">
           </div>
-          <div class="category">
-            <label for="category">on</label>
-            <input type="text" name="category" id="category" list="categories" autocomplete="off">
-            <datalist id="categories">
-            </datalist>
+          <div id="adjustMoneyContainer" class="spentMoney">
+            <div class="adjustMoney">
+              <label for="adjustMoney">I spent $</label>
+              <input type="text" pattern="[-+]?[\d,\._]*" name="adjustMoney" id="adjustMoney" class="dollarInput">
+            </div>
+            <div class="category">
+              <label for="category">on</label>
+              <input type="text" name="category" id="category" list="categories" autocomplete="off">
+            </div>
+            <button id="adjustMoneyButton">done</button>
           </div>
-          <button onclick="adjustMoney()">done</button>
-        </div>
+        </form>
         <div class="history">
           <ol id="historyList" class="historyList"></ol>
         </div>
@@ -53,9 +49,12 @@
           <ul id="systemMessages"></ul>
         </div>
       </div>
+
     </div>
   </main>
-  <script src="index.js"></script>
+  <datalist id="categories">
+  </datalist>
+  <script type="module" src="index.js"></script>
 </body>
 
 </html>
