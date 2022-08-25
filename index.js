@@ -54,6 +54,15 @@ window.addEventListener('load', () => {
     systemMessages.appendChild(createListItem('object store created'))
   }
 
+  document.getElementById('adjustMoney').addEventListener('input', checkAmount)
+  document.getElementById('moneyOnHand').addEventListener('blur', updateMoneyOnHand)
+
+  document.getElementById('moneyForm').addEventListener('submit', e => {
+    e.preventDefault()
+
+    adjustMoney()
+  }, false)
+
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./src/sw.js')
   }
@@ -89,35 +98,6 @@ function createListItem(text) {
   li.textContent = text
   return li
 }
-
-class Money {
-  #amount
-  #formatter
-  constructor(amount, asIs = false, locale = 'en-US', currency = 'USD') {
-    this.#amount = asIs ? amount : amount * 100
-    this.#formatter = new Intl.NumberFormat(locale, { style: 'currency', currency })
-  }
-
-  // this is getting real silly.
-  static fromFormatted(amount) {
-    return new Money(
-      (amount.length == 1 ? amount + '.' : amount)
-      .padEnd(
-        amount.lastIndexOf('.') + 3,
-        '0')
-        .replace(/[,\._]/g, ''),
-      [...amount.matchAll(/\./g)].length !== 0)
-  }
-
-  document.getElementById('adjustMoney').addEventListener('input', checkAmount)
-  document.getElementById('moneyOnHand').addEventListener('blur', updateMoneyOnHand)
-
-  document.getElementById('moneyForm').addEventListener('submit', e => {
-    e.preventDefault()
-
-    adjustMoney()
-  }, false)
-})
 
 function initHistoryList() {
   let histList = document.getElementById('historyList')
