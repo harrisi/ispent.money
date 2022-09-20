@@ -1,27 +1,27 @@
 import Money from './src/money.mjs'
 let db
 
-// const params = new Proxy(new URLSearchParams(window.location.search), {
-//   get: (searchParams, prop) => searchParams.get(prop),
-// })
+function recommendPWA() {
+  const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+  })
 
-// if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
-//   if (!params.launcher) {
-//     // suggest adding to homescreen
-//     let p = document.createElement('p')
-//     p.textContent = `it looks like you're on mobile. try adding to homescreen.`
-//     document.querySelector('#container').appendChild(p)
-//   }
-// }
-
-// now that I don't do this in window.onload, it should be abstracted.
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+    if (!params.launcher) {
+      // suggest adding to homescreen
+      let p = document.createElement('p')
+      p.textContent = `it looks like you're on mobile. try adding to homescreen.`
+      document.getElementById('container').appendChild(p)
+    }
+  }
+}
 
 let mOH = new Money(localStorage.getItem('moneyOnHand') || 0, true)
-document.querySelector('#moneyOnHand').value = mOH.toString()
+document.getElementById('moneyOnHand').value = mOH.toString()
 initHistoryList()
 populateCategories(localStorage.getItem('categories'))
 
-const systemMessages = document.querySelector('#systemMessages')
+const systemMessages = document.getElementById('systemMessages')
 
 const DBOpenRequest = window.indexedDB.open('ispent.money')
 
@@ -39,7 +39,6 @@ DBOpenRequest.onsuccess = e => {
 
 DBOpenRequest.onupgradeneeded = e => {
   db = e.target.result
-
   db.onerror = e => {
     systemMessages.appendChild(createListItem('error loading database'))
   }

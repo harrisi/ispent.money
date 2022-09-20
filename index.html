@@ -18,41 +18,54 @@
 </head>
 
 <body>
+  <header>
+    <h1>i spent money</h1>
+  </header>
+
+  <!--
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+  -->
+
+  <!-- could deal with js being disabled. -->
+  <!-- https://www.w3.org/html/wiki/Elements/noscript#Example_A -->
+  <!-- scroll down to the second example for avoiding noscript -->
+  <!-- I should do this. -->
+
   <main>
-    <div class="container">
-      <div class="header">
-        <h1>i spent money</h1>
+    <form id="moneyForm" action="index.html">
+      <div id="totalMoneyContainer" class="totalMoney">
+        <!-- localization issue -->
+        <label for="moneyOnHand">I have $</label>
+        <input type="text" pattern="[-+]?[\d,\._]*" name="moneyOnHand" id="moneyOnHand" class="dollarInput">
       </div>
-
-      <div class="content">
-        <form id="moneyForm" action="index.html">
-          <div id="totalMoneyContainer" class="totalMoney">
-            <label for="moneyOnHand">I have $</label>
-            <input type="text" pattern="[-+]?[\d,\._]*" name="moneyOnHand" id="moneyOnHand" class="dollarInput">
-          </div>
-          <div id="adjustMoneyContainer" class="spentMoney">
-            <div class="adjustMoney">
-              <label for="adjustMoney">I spent $</label>
-              <input type="text" pattern="[-+]?[\d,\._]*" name="adjustMoney" id="adjustMoney" class="dollarInput">
-            </div>
-            <div class="category">
-              <label for="category">on</label>
-              <input type="text" name="category" id="category" list="categories" autocomplete="off">
-            </div>
-            <button id="adjustMoneyButton">done</button>
-          </div>
-        </form>
-        <div class="history">
-          <ol id="historyList" class="historyList"></ol>
+      <div id="adjustMoneyContainer" class="spentMoney">
+        <div class="adjustMoney">
+          <!-- localization issue -->
+          <label for="adjustMoney">I spent $</label>
+          <input type="text" pattern="[-+]?[\d,\._]*" name="adjustMoney" id="adjustMoney" class="dollarInput">
         </div>
-        <div class="history">
-          <ol id="hist" class="historyList"></ol>
-          <ul id="systemMessages"></ul>
+        <div class="category">
+          <label for="category">on</label>
+          <input type="text" name="category" id="category" list="categories" autocomplete="off">
         </div>
+        <button id="adjustMoneyButton">done</button>
       </div>
-
+    </form>
+    <div class="history">
+      <ol id="historyList" class="historyList"></ol>
+    </div>
+    <div class="history">
+      <ol id="hist" class="historyList"></ol>
+      <ul id="systemMessages"></ul>
     </div>
   </main>
+
   <datalist id="categories">
   </datalist>
 </body>
