@@ -1,15 +1,15 @@
 const cacheName = 'ispent.money-v1'
 const appShellFiles = [
-  '../',
-  '../index.html',
-  '../index.js',
-  '../style.css',
-  '../favicon.ico',
-  '../res/android-chrome-192x192.png',
-  '../res/android-chrome-512x512.png',
-  '../res/apple-touch-icon.png',
-  '../res/favicon-16x16.png',
-  '../res/favicon-32x32.png',
+  '/',
+  '/index.html',
+  '/index.js',
+  '/style.css',
+  '/favicon.ico',
+  '/res/android-chrome-192x192.png',
+  '/res/android-chrome-512x512.png',
+  '/res/apple-touch-icon.png',
+  '/res/favicon-16x16.png',
+  '/res/favicon-32x32.png',
 ]
 
 self.addEventListener('install', e => {
